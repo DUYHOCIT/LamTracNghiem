@@ -413,6 +413,26 @@
             font-size: 1.1em;
             line-height: 1.7;
         }
+        
+        /* *** MỚI: CSS cho Fill Blank *** */
+        .fill-blank-input {
+            border: none;
+            border-bottom: 2px solid var(--color-primary);
+            padding: 2px 5px;
+            font-size: 1em; /* Giống cỡ chữ câu hỏi */
+            font-family: inherit;
+            margin: 0 5px;
+            width: 150px; /* Độ rộng mặc định */
+            background-color: var(--color-light-bg);
+            text-align: center;
+        }
+        .fill-blank-input:focus {
+            outline: none;
+            background-color: #fff;
+            border-color: var(--color-answer);
+        }
+        /* *** HẾT CSS MỚI *** */
+
 
         /* Feedback Area */
         .button-group {
@@ -692,11 +712,13 @@
                     shuffleArray(subject.questions);
                 }
                 
+                // *** THAY ĐỔI: Thêm fill_blank vào thứ tự ***
                 const typeOrder = {
                     'single_choice': 1,
                     'multiple_choice': 2,
                     'true_false': 3,
-                    'drag_drop': 4
+                    'fill_blank': 4,
+                    'drag_drop': 5
                 };
                 subject.questions.sort((a, b) => {
                     const orderA = typeOrder[a.type] || 99;
@@ -750,7 +772,16 @@
 
             const text = document.createElement('div');
             text.className = 'question-text';
-            text.innerHTML = `<strong>Câu ${qIndex}:</strong> ${question.text.replace(/\n/g, '<br>')}`;
+            
+            // *** THAY ĐỔI: Xử lý hiển thị cho fill_blank ***
+            if (question.type === 'fill_blank') {
+                // Tạo thẻ input
+                const input = `<input type="text" class="fill-blank-input" data-question-id="${question.id}">`;
+                // Thay thế dấu ... bằng thẻ input
+                text.innerHTML = `<strong>Câu ${qIndex}:</strong> ${question.text.replace(/(\.{3,})/g, input)}`;
+            } else {
+                text.innerHTML = `<strong>Câu ${qIndex}:</strong> ${question.text.replace(/\n/g, '<br>')}`;
+            }
             card.appendChild(text);
 
             const answerArea = document.createElement('div');
@@ -766,6 +797,9 @@
                     break;
                 case 'true_false':
                     renderTrueFalse(question, answerArea);
+                    break;
+                case 'fill_blank':
+                    // Không cần làm gì thêm, input đã ở trong question-text
                     break;
                 case 'drag_drop':
                     text.style.display = 'none';
@@ -1050,6 +1084,7 @@
             displayFeedback(feedbackArea, isCorrect, question);
         }
 
+        // *** THAY ĐỔI: Cập nhật getUserAnswer ***
         function getUserAnswer(card, type) {
             switch (type) {
                 case 'single_choice': {
@@ -1071,6 +1106,10 @@
                     });
                     return answer;
                 }
+                case 'fill_blank': {
+                    const input = card.querySelector('.fill-blank-input');
+                    return input ? input.value : null;
+                }
                 case 'drag_drop': {
                      const answer = {};
                      card.querySelectorAll('.drop-zone').forEach(zone => {
@@ -1086,6 +1125,7 @@
             }
         }
 
+        // *** THAY ĐỔI: Cập nhật checkAnswer ***
         function checkAnswer(userAnswer, question) {
             const correctAnswer = question.answers;
             switch (question.type) {
@@ -1096,6 +1136,10 @@
                     return JSON.stringify(userAnswer) === JSON.stringify(sortedCorrect);
                 case 'true_false':
                     return JSON.stringify(userAnswer) === JSON.stringify(correctAnswer);
+                case 'fill_blank':
+                    if (userAnswer === null) return false;
+                    // So sánh không phân biệt hoa thường và bỏ khoảng trắng
+                    return userAnswer.trim().toLowerCase() === correctAnswer.trim().toLowerCase();
                 case 'drag_drop':
                     const sortedCorrectAnswer = { ...correctAnswer };
                     Object.keys(sortedCorrectAnswer).forEach(key => {
@@ -1118,6 +1162,7 @@
             feedbackArea.innerHTML = feedbackHTML;
         }
 
+        // *** THAY ĐỔI: Cập nhật formatCorrectAnswer ***
         function formatCorrectAnswer(question) {
             const { answers, options, type } = question;
             switch (type) {
@@ -1129,6 +1174,8 @@
                     return Object.entries(answers)
                         .map(([key, value]) => `<strong>${question.options[key-1]}</strong>: ${value}`)
                         .join('<br>');
+                case 'fill_blank':
+                    return answers; // Chỉ là chuỗi đáp án
                 case 'drag_drop':
                     return Object.entries(answers)
                         .map(([zone, optionIdOrArray]) => {
@@ -1145,6 +1192,7 @@
             return "Không có thông tin đáp án.";
         }
        
+        // *** THAY ĐỔI: Cập nhật resetCard ***
         function resetCard(card) {
             const feedbackArea = card.querySelector('.feedback-area');
             feedbackArea.style.display = 'none';
@@ -1152,7 +1200,14 @@
 
             card.querySelectorAll('input[type="radio"], input[type="checkbox"]')
                 .forEach(input => input.checked = false);
+                
+            // Xóa nội dung trong ô fill_blank
+            const fillInput = card.querySelector('.fill-blank-input');
+            if (fillInput) {
+                fillInput.value = '';
+            }
 
+            // Đưa các mục kéo thả về bank
             const bank = card.querySelector('.drag-bank');
             if (bank) {
                 const draggablesInZones = card.querySelectorAll('.drop-zone .draggable');
@@ -1205,6 +1260,7 @@
                     items.forEach(item => bank.appendChild(item));
                     break;
                 }
+                // fill_blank không cần làm gì ở đây vì đã reset ở trên
             }
         }
 
@@ -1267,16 +1323,55 @@
             }
         }
 
+        // *** THAY ĐỔI: Cập nhật hàm handleRetryAll ***
         function handleRetryAll() {
             const activePane = document.querySelector('.tab-pane.active');
             if (!activePane) return;
             
             document.getElementById('error-summary').innerHTML = '';
-
-            const allCards = activePane.querySelectorAll('.question-card');
-            allCards.forEach(card => {
-                resetCard(card);
-            });
+            
+            const shouldShuffle = document.getElementById('shuffleCheckbox').checked;
+            
+            if (shouldShuffle) {
+                // Nếu bật xáo trộn, ta xây dựng lại toàn bộ pane này
+                
+                // 1. Lấy dữ liệu subject tương ứng
+                const paneId = activePane.id; // vd: "subject-pane-0"
+                const paneIndex = parseInt(paneId.split('-').pop(), 10);
+                const subject = quizData.subjects[paneIndex];
+                
+                if (subject) {
+                    // 2. Chạy lại logic xáo trộn VÀ sắp xếp theo loại câu hỏi
+                    // (Giống hệt logic trong setupQuizUI)
+                    shuffleArray(subject.questions); // Xáo trộn
+                    
+                    const typeOrder = {
+                        'single_choice': 1,
+                        'multiple_choice': 2,
+                        'true_false': 3,
+                        'fill_blank': 4, // Đã thêm
+                        'drag_drop': 5
+                    };
+                    subject.questions.sort((a, b) => { // Sắp xếp theo loại
+                        const orderA = typeOrder[a.type] || 99;
+                        const orderB = typeOrder[b.type] || 99;
+                        return orderA - orderB;
+                    });
+                    
+                    // 3. Xóa nội dung pane cũ và tạo lại
+                    activePane.innerHTML = '';
+                    subject.questions.forEach((question, qIndex) => {
+                        activePane.appendChild(createQuestionElement(question, subject.title, qIndex + 1));
+                    });
+                }
+                
+            } else {
+                // Hành vi cũ: Nếu không bật xáo trộn, chỉ reset từng card
+                const allCards = activePane.querySelectorAll('.question-card');
+                allCards.forEach(card => {
+                    resetCard(card);
+                });
+            }
 
             document.getElementById('main-content').scrollTo(0, 0);
         }
