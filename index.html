@@ -991,17 +991,33 @@
             questionText.innerHTML = `<strong>Câu ${qIndex}:</strong> ${question.text.replace(/\n/g, '<br>')}`;
             dropArea.appendChild(questionText);
             if (isDragDropSingleFill(question)) {
-                const zoneId = question.drop_zones[0];
-                const pZone = document.createElement('p');
-                pZone.style.textAlign = 'center';
-                pZone.style.marginTop = '20px';
-                const zone = document.createElement('span');
-                zone.className = 'drop-zone';
-                zone.dataset.zoneId = zoneId;
-                zone.style.minWidth = '200px';
-                pZone.appendChild(zone);
-                dropArea.appendChild(pZone);
-            } else {
+            // Lấy văn bản từ drop_zones (ví dụ: "*…………..là một truyền thống...")
+            const zoneTextTemplate = question.drop_zones[0]; 
+            
+            // Tạo thẻ <p> để chứa cả văn bản và ô kéo thả
+            const pZone = document.createElement('p');
+            // Dùng class 'question-text-in-drag' đã có sẵn CSS
+            pZone.className = 'question-text-in-drag'; 
+            pZone.style.lineHeight = '2'; // Tăng chiều cao dòng một chút cho dễ nhìn
+            
+            // 1. Thêm văn bản (toàn bộ nội dung) vào thẻ <p>
+            // Chúng ta dùng createTextNode để đảm bảo an toàn và thêm 1 khoảng trắng
+            pZone.appendChild(document.createTextNode(zoneTextTemplate + " ")); 
+            
+            // 2. Tạo ô kéo thả (drop-zone)
+            const zone = document.createElement('span');
+            zone.className = 'drop-zone';
+            // data-zone-id PHẢI khớp với key trong "answers", chính là chuỗi văn bản
+            zone.dataset.zoneId = zoneTextTemplate; 
+            zone.style.minWidth = '150px'; // Đặt độ rộng tối thiểu cho ô
+            
+            // 3. Thêm ô kéo thả vào *sau* văn bản, bên trong cùng thẻ <p>
+            pZone.appendChild(zone);
+            
+            // 4. Thêm thẻ <p> (chứa cả text và zone) vào khu vực thả
+            dropArea.appendChild(pZone);
+
+        } else {
                 question.drop_zones.forEach(zoneText => {
                     const p = document.createElement('p');
                     p.innerHTML = `${zoneText}: `;
