@@ -1,7 +1,6 @@
 <!DOCTYPE html>
-<html lang="vi">
-<head>
-    <meta charset="UTF-8">
+<html lang="vi"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ôn tập trắc nghiệm</title>
     <style>
@@ -19,7 +18,6 @@
             --shadow-light: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
 
-        /* *** THAY ĐỔI: Layout chính bằng Flexbox *** */
         html, body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
             line-height: 1.6;
@@ -27,14 +25,14 @@
             color: var(--color-text);
             margin: 0;
             padding: 0;
-            height: 100%; /* Đổi từ vh */
-            overflow: hidden; /* Ngăn body cuộn */
+            height: 100%; 
+            overflow: hidden; 
         }
         
         body {
             display: flex;
             flex-direction: column;
-            height: 100vh; /* Giữ 100vh ở body */
+            height: 100vh; 
         }
 
         header {
@@ -42,7 +40,7 @@
             background: var(--color-main-bg);
             border-bottom: 2px solid var(--color-primary);
             position: relative;
-            flex-shrink: 0; /* MỚI: Không co header */
+            flex-shrink: 0; 
         }
 
         h1 {
@@ -51,9 +49,8 @@
             margin: 0;
         }
         
-        /* *** THAY ĐỔI: Nút ☰ luôn hiển thị *** */
         #sidebar-toggle-btn {
-            display: block; /* Luôn hiển thị */
+            display: block; 
             position: absolute;
             left: 15px;
             top: 50%;
@@ -104,11 +101,10 @@
             display: none;
         }
 
-        /* *** THAY ĐỔI: Layout Flex cho quiz, bỏ height calc() *** */
         #quiz-ui {
             display: flex;
-            flex-grow: 1; /* MỚI: Lấp đầy không gian còn lại */
-            min-height: 0; /* MỚI: Fix lỗi overflow trong flex */
+            flex-grow: 1; 
+            min-height: 0; 
         }
 
         #left-sidebar {
@@ -120,11 +116,9 @@
             overflow-y: auto;
             display: flex;
             flex-direction: column;
-            /* *** THAY ĐỔI: Thêm width, padding vào transition *** */
             transition: transform 0.3s ease-in-out, width 0.3s ease-in-out, padding 0.3s ease-in-out;
         }
         
-        /* *** MỚI: Trạng thái thu gọn cho Desktop *** */
         #quiz-ui.sidebar-collapsed #left-sidebar {
             width: 0;
             padding-left: 0;
@@ -132,16 +126,18 @@
             overflow: hidden;
             border-right: none;
         }
-        /* Ẩn nội dung bên trong sidebar ngay lập tức khi thu gọn */
         #quiz-ui.sidebar-collapsed #left-sidebar > * {
             display: none;
         }
 
         #main-content {
             flex-grow: 1;
-            overflow-y: auto; /* Chỉ thanh nội dung chính cuộn */
+            overflow-y: auto; 
             background-color: var(--color-main-bg);
-            min-width: 0; /* Fix flexbox co thắt */
+            min-width: 0; 
+            /* Tắt smooth scroll global để việc khôi phục vị trí tức thì và chính xác hơn, 
+               chỉ dùng smooth scroll khi click vào link lỗi */
+            scroll-behavior: auto; 
         }
         
         #sidebar-overlay {
@@ -264,6 +260,13 @@
             color: var(--color-primary);
             margin-right: 5px;
         }
+        
+        .question-text img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 10px 0;
+        }
 
         .options-list {
             list-style-type: none;
@@ -280,6 +283,7 @@
             align-items: center;
             transition: background-color 0.2s;
             cursor: pointer;
+            min-height: 40px;
         }
         
         .option-item:hover {
@@ -301,12 +305,24 @@
         .option-item input[type="checkbox"] {
             margin-right: 12px;
             flex-shrink: 0;
+            margin-top: auto; 
+            margin-bottom: auto;
         }
         
         .option-item label {
             width: 100%;
             cursor: pointer;
             margin: 0;
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        .option-item label img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin-top: 5px;
+            border-radius: 4px;
         }
 
         .single-choice-list {
@@ -414,15 +430,14 @@
             line-height: 1.7;
         }
         
-        /* *** MỚI: CSS cho Fill Blank *** */
         .fill-blank-input {
             border: none;
             border-bottom: 2px solid var(--color-primary);
             padding: 2px 5px;
-            font-size: 1em; /* Giống cỡ chữ câu hỏi */
+            font-size: 1em; 
             font-family: inherit;
             margin: 0 5px;
-            width: 150px; /* Độ rộng mặc định */
+            width: 150px; 
             background-color: var(--color-light-bg);
             text-align: center;
         }
@@ -431,10 +446,7 @@
             background-color: #fff;
             border-color: var(--color-answer);
         }
-        /* *** HẾT CSS MỚI *** */
 
-
-        /* Feedback Area */
         .button-group {
             margin-top: 20px;
         }
@@ -487,69 +499,68 @@
         .correct-answer strong {
             color: var(--color-text);
         }
+        .correct-answer img {
+             max-width: 100%;
+             height: auto;
+             margin-top: 5px;
+             display: block;
+        }
 
-        /* *** THAY ĐỔI: Tách biệt CSS cho Mobile *** */
         @media (max-width: 768px) {
             h1 {
-                /* Tạo không gian cho nút hamburger */
                 padding: 0 40px; 
             }
             
             #quiz-ui {
-                display: block; /* Bỏ flex, để main-content tự chiếm không gian */
+                display: block; 
             }
 
             #left-sidebar {
-                /* Ghi đè cài đặt desktop (width: 0, v.v.) */
-                position: fixed; /* Bay lơ lửng */
+                position: fixed; 
                 top: 0;
                 left: 0;
-                height: 100vh; /* Cao 100% màn hình */
-                width: 280px !important; /* MỚI: !important để ghi đè width 0 */
+                height: 100vh; 
+                width: 280px !important; 
                 z-index: 1000;
-                transform: translateX(-100%); /* Trạng thái default (ẩn) */
-                padding: 20px; /* Reset padding */
+                transform: translateX(-100%); 
+                padding: 20px; 
                 border-right: 1px solid var(--color-border);
-                overflow-y: auto; /* Đảm bảo cuộn được */
+                overflow-y: auto; 
             }
             
-            /* Đảm bảo nội dung sidebar hiển thị khi nó trượt ra */
             #left-sidebar > * {
                 display: block !important; 
             }
             
             #main-content {
-                height: 100%; /* Chiếm 100% chiều cao của #quiz-ui */
+                height: 100%; 
                 overflow-y: auto;
             }
             
-            /* Lớp trạng thái khi MỞ trên mobile (slide-over) */
             #quiz-ui.sidebar-open #left-sidebar {
-                transform: translateX(0); /* Hiện sidebar */
+                transform: translateX(0); 
             }
             #quiz-ui.sidebar-open #sidebar-overlay {
-                display: block; /* Hiện lớp phủ */
+                display: block; 
             }
 
-            /* Bỏ qua trạng thái desktop-collapse khi ở mobile */
             #quiz-ui.sidebar-collapsed #left-sidebar {
-                transform: translateX(-100%); /* Vẫn ẩn */
+                transform: translateX(-100%); 
                 width: 280px !important; 
                 padding: 20px;
             }
 
-            /* Responsive cho câu hỏi */
             .single-choice-list {
-                grid-template-columns: 1fr; /* 1 cột trên điện thoại */
+                grid-template-columns: 1fr; 
             }
             .drag-drop-container {
-                flex-direction: column; /* Xếp chồng lên nhau */
+                flex-direction: column; 
             }
             .drag-bank {
-                order: 2; /* Ngân hàng từ ở dưới */
+                order: 2; 
             }
             .drop-area {
-                order: 1; /* Khu vực thả ở trên */
+                order: 1; 
             }
         }
 
@@ -559,14 +570,14 @@
 
     <header>
         <button id="sidebar-toggle-btn">☰</button>
-        <h1>Cái để làm trắc nghiệm</h1>
+        <h1>Ôn tập trắc nghiệm</h1>
         <div id="file-loader">
              <div>
                 <label for="jsonFileInput">Chọn file json hoặc kéo file vào nút:</label>
                 <input type="file" id="jsonFileInput" accept=".json">
              </div>
              <div id="shuffle-options">
-                <input type="checkbox" id="shuffleCheckbox" checked>
+                <input type="checkbox" id="shuffleCheckbox" checked="">
                 <label for="shuffleCheckbox">Xáo trộn câu hỏi và đáp án</label>
              </div>
         </div>
@@ -595,8 +606,9 @@
     <script>
         let quizData = null;
         let draggedItem = null;
+        // *** MỚI: Biến lưu vị trí cuộn của từng tab ***
+        let tabScrollPositions = {}; 
         
-        // *** THAY ĐỔI: Logic xử lý đóng/mở sidebar ***
         document.addEventListener('DOMContentLoaded', () => {
             const toggleBtn = document.getElementById('sidebar-toggle-btn');
             const overlay = document.getElementById('sidebar-overlay');
@@ -604,36 +616,27 @@
             const tabNav = document.getElementById('tab-nav');
 
             if (toggleBtn && overlay && quizUI && tabNav) {
-                // Hàm đóng sidebar (chỉ dùng cho mobile)
                 const closeSidebar = () => {
                     quizUI.classList.remove('sidebar-open');
                 };
 
-                // Nhấn nút ☰
                 toggleBtn.addEventListener('click', () => {
                     if (window.innerWidth <= 768) {
-                        // Hành vi Mobile: slide-over
                         quizUI.classList.toggle('sidebar-open');
                     } else {
-                        // Hành vi Desktop: push/collapse
                         quizUI.classList.toggle('sidebar-collapsed');
                     }
                 });
 
-                // Nhấn vào lớp phủ để đóng (chỉ trên mobile)
                 overlay.addEventListener('click', closeSidebar);
 
-                // Nhấn vào một tab (chủ đề)
                 tabNav.addEventListener('click', (e) => {
-                    // Chỉ tự động đóng nếu là nút tab VÀ trên mobile
                     if (e.target.classList.contains('tab-button') && window.innerWidth <= 768) {
                         closeSidebar();
                     }
-                    // Trên desktop, nó sẽ không làm gì cả (không đóng sidebar)
                 });
             }
         });
-        // *** HẾT KHỐI CODE THAY ĐỔI ***
 
         document.getElementById('jsonFileInput').addEventListener('change', handleFileSelect);
 
@@ -653,7 +656,7 @@
 
             const input = item.querySelector('input[type="radio"], input[type="checkbox"]');
             if (input) {
-                if (e.target.tagName === 'LABEL') {
+                if (e.target.tagName === 'LABEL' || e.target.tagName === 'IMG') {
                     e.preventDefault();
                 }
                 input.click();
@@ -704,6 +707,9 @@
             tabNav.innerHTML = '';
             tabContent.innerHTML = '';
             
+            // *** MỚI: Reset lại bộ nhớ vị trí cuộn khi load file mới ***
+            tabScrollPositions = {}; 
+
             const shouldShuffle = document.getElementById('shuffleCheckbox').checked;
 
             subjects.forEach((subject, index) => {
@@ -712,7 +718,6 @@
                     shuffleArray(subject.questions);
                 }
                 
-                // *** THAY ĐỔI: Thêm fill_blank vào thứ tự ***
                 const typeOrder = {
                     'single_choice': 1,
                     'multiple_choice': 2,
@@ -738,7 +743,7 @@
                 pane.id = `subject-pane-${index}`;
                 
                 subject.questions.forEach((question, qIndex) => {
-                    pane.appendChild(createQuestionElement(question, subject.title, qIndex + 1));
+                    pane.appendChild(createQuestionElement(question, subject.title, qIndex + 1, index));
                 });
                 tabContent.appendChild(pane);
             });
@@ -751,7 +756,15 @@
 
         function handleTabClick(event) {
             const targetPaneId = event.target.dataset.target;
+            const mainContentEl = document.getElementById('main-content');
 
+            // *** MỚI: LƯU vị trí cuộn của Tab HIỆN TẠI trước khi chuyển ***
+            const currentActivePane = document.querySelector('.tab-pane.active');
+            if (currentActivePane) {
+                tabScrollPositions[currentActivePane.id] = mainContentEl.scrollTop;
+            }
+
+            // --- Xử lý chuyển Tab ---
             document.querySelectorAll('.tab-button').forEach(btn => {
                 btn.classList.toggle('active', btn === event.target);
             });
@@ -761,23 +774,32 @@
             });
             
             document.getElementById('error-summary').innerHTML = '';
+            
+            // *** MỚI: KHÔI PHỤC vị trí cuộn của Tab MỚI (Nếu có thì khôi phục, không thì về 0) ***
+            // Dùng setTimeout 0 để đảm bảo DOM đã render xong style display:block trước khi cuộn
+            setTimeout(() => {
+                const savedScrollTop = tabScrollPositions[targetPaneId];
+                if (savedScrollTop !== undefined) {
+                    mainContentEl.scrollTop = savedScrollTop;
+                } else {
+                    mainContentEl.scrollTop = 0;
+                }
+            }, 0);
         }
 
-        function createQuestionElement(question, subjectTitle, qIndex) {
+        function createQuestionElement(question, subjectTitle, qIndex, subjectIndex) {
             const card = document.createElement('div');
             card.className = 'question-card';
             card.dataset.questionId = question.id;
             card.dataset.subjectTitle = subjectTitle;
-            card.id = `q-card-${question.id}`; 
+            
+            card.id = `q-card-${subjectIndex}-${question.id}`; 
 
             const text = document.createElement('div');
             text.className = 'question-text';
             
-            // *** THAY ĐỔI: Xử lý hiển thị cho fill_blank ***
             if (question.type === 'fill_blank') {
-                // Tạo thẻ input
                 const input = `<input type="text" class="fill-blank-input" data-question-id="${question.id}">`;
-                // Thay thế dấu ... bằng thẻ input
                 text.innerHTML = `<strong>Câu ${qIndex}:</strong> ${question.text.replace(/(\.{3,})/g, input)}`;
             } else {
                 text.innerHTML = `<strong>Câu ${qIndex}:</strong> ${question.text.replace(/\n/g, '<br>')}`;
@@ -787,23 +809,24 @@
             const answerArea = document.createElement('div');
             answerArea.className = 'answer-area';
             
+            const uniqueNamePrefix = `s${subjectIndex}_q${question.id}`;
+
             switch (question.type) {
                 case 'single_choice':
                     if (isDragDropSingleFill(question)) { text.style.display = 'none'; }
-                    renderSingleChoice(question, answerArea);
+                    renderSingleChoice(question, answerArea, uniqueNamePrefix);
                     break;
                 case 'multiple_choice':
-                    renderMultipleChoice(question, answerArea);
+                    renderMultipleChoice(question, answerArea, uniqueNamePrefix);
                     break;
                 case 'true_false':
-                    renderTrueFalse(question, answerArea);
+                    renderTrueFalse(question, answerArea, uniqueNamePrefix);
                     break;
                 case 'fill_blank':
-                    // Không cần làm gì thêm, input đã ở trong question-text
                     break;
                 case 'drag_drop':
                     text.style.display = 'none';
-                    renderDragDrop(question, answerArea, qIndex);
+                    renderDragDrop(question, answerArea, qIndex, uniqueNamePrefix);
                     break;
             }
             card.appendChild(answerArea);
@@ -833,7 +856,7 @@
             return card;
         }
 
-        function renderSingleChoice(question, area) {
+        function renderSingleChoice(question, area, prefix) {
             const list = document.createElement('ul');
             list.className = 'options-list single-choice-list';
             
@@ -854,13 +877,13 @@
 
                 const radio = document.createElement('input');
                 radio.type = 'radio';
-                radio.name = `q_${question.id}`;
+                radio.name = prefix; 
                 radio.value = opt.originalValue;
-                radio.id = `q_${question.id}_opt_${newIndex}`;
+                radio.id = `${prefix}_opt_${newIndex}`;
                 
                 const label = document.createElement('label');
-                label.textContent = opt.text;
-                label.htmlFor = `q_${question.id}_opt_${newIndex}`;
+                label.innerHTML = opt.text; 
+                label.htmlFor = `${prefix}_opt_${newIndex}`;
                 
                 item.appendChild(radio);
                 item.appendChild(label);
@@ -869,7 +892,7 @@
             area.appendChild(list);
         }
 
-        function renderMultipleChoice(question, area) {
+        function renderMultipleChoice(question, area, prefix) {
             const list = document.createElement('ul');
             list.className = 'options-list multiple-choice-list';
             
@@ -890,13 +913,13 @@
 
                 const checkbox = document.createElement('input');
                 checkbox.type = 'checkbox';
-                checkbox.name = `q_${question.id}`;
+                checkbox.name = prefix; 
                 checkbox.value = opt.originalValue;
-                checkbox.id = `q_${question.id}_opt_${newIndex}`;
+                checkbox.id = `${prefix}_opt_${newIndex}`;
                 
                 const label = document.createElement('label');
-                label.textContent = opt.text;
-                label.htmlFor = `q_${question.id}_opt_${newIndex}`;
+                label.innerHTML = opt.text;
+                label.htmlFor = `${prefix}_opt_${newIndex}`;
                 
                 item.appendChild(checkbox);
                 item.appendChild(label);
@@ -905,7 +928,7 @@
             area.appendChild(list);
         }
 
-        function renderTrueFalse(question, area) {
+        function renderTrueFalse(question, area, prefix) {
             let indexedStatements = question.options.map((statement, index) => ({
                 text: statement,
                 originalIndex: index
@@ -919,11 +942,12 @@
                 const group = document.createElement('div');
                 group.className = 'true-false-group';
                 group.dataset.stmtIndex = stmt.originalIndex + 1;
+                
                 const stmtText = document.createElement('p');
-                stmtText.textContent = stmt.text;
+                stmtText.innerHTML = stmt.text; 
                 group.appendChild(stmtText);
                 
-                const radioName = `q_${question.id}_stmt_${stmt.originalIndex}`;
+                const radioName = `${prefix}_stmt_${stmt.originalIndex}`;
                 const trueId = `${radioName}_true`;
                 const falseId = `${radioName}_false`;
 
@@ -959,12 +983,12 @@
             return zoneKeys.length === 1 && typeof question.answers[zoneKeys[0]] === 'number';
         }
 
-        function renderDragDrop(question, area, qIndex) {
+        function renderDragDrop(question, area, qIndex, prefix) {
             const container = document.createElement('div');
             container.className = 'drag-drop-container';
             const dragBank = document.createElement('div');
             dragBank.className = 'drag-bank';
-            dragBank.id = `bank_${question.id}`;
+            dragBank.id = `bank_${prefix}`;
             let indexedOptions = question.options.map((option, index) => ({
                 text: option,
                 originalId: index + 1
@@ -977,10 +1001,10 @@
             indexedOptions.forEach((opt) => {
                 const item = document.createElement('div');
                 item.className = 'draggable';
-                item.textContent = opt.text;
+                item.innerHTML = opt.text;
                 item.dataset.optionId = opt.originalId;
                 item.draggable = true;
-                item.id = `q_${question.id}_drag_${opt.originalId}`;
+                item.id = `${prefix}_drag_${opt.originalId}`;
                 item.addEventListener('dragstart', handleDragStart);
                 dragBank.appendChild(item);
             });
@@ -991,30 +1015,20 @@
             questionText.innerHTML = `<strong>Câu ${qIndex}:</strong> ${question.text.replace(/\n/g, '<br>')}`;
             dropArea.appendChild(questionText);
             if (isDragDropSingleFill(question)) {
-            // Lấy văn bản từ drop_zones (ví dụ: "*…………..là một truyền thống...")
             const zoneTextTemplate = question.drop_zones[0]; 
             
-            // Tạo thẻ <p> để chứa cả văn bản và ô kéo thả
             const pZone = document.createElement('p');
-            // Dùng class 'question-text-in-drag' đã có sẵn CSS
             pZone.className = 'question-text-in-drag'; 
-            pZone.style.lineHeight = '2'; // Tăng chiều cao dòng một chút cho dễ nhìn
+            pZone.style.lineHeight = '2'; 
             
-            // 1. Thêm văn bản (toàn bộ nội dung) vào thẻ <p>
-            // Chúng ta dùng createTextNode để đảm bảo an toàn và thêm 1 khoảng trắng
             pZone.appendChild(document.createTextNode(zoneTextTemplate + " ")); 
             
-            // 2. Tạo ô kéo thả (drop-zone)
             const zone = document.createElement('span');
             zone.className = 'drop-zone';
-            // data-zone-id PHẢI khớp với key trong "answers", chính là chuỗi văn bản
             zone.dataset.zoneId = zoneTextTemplate; 
-            zone.style.minWidth = '150px'; // Đặt độ rộng tối thiểu cho ô
+            zone.style.minWidth = '150px'; 
             
-            // 3. Thêm ô kéo thả vào *sau* văn bản, bên trong cùng thẻ <p>
             pZone.appendChild(zone);
-            
-            // 4. Thêm thẻ <p> (chứa cả text và zone) vào khu vực thả
             dropArea.appendChild(pZone);
 
         } else {
@@ -1041,8 +1055,6 @@
             dragBank.addEventListener('dragover', handleDragOver);
             dragBank.addEventListener('drop', handleDrop);
         }
-
-        // --- Drag/Drop Event Handlers (Không thay đổi) ---
 
         function handleDragStart(e) {
             draggedItem = e.target;
@@ -1081,8 +1093,6 @@
             draggedItem = null;
         }
 
-        // --- Check & Retry Logic (Không thay đổi) ---
-
         function getQuestionData(card) {
             const questionId = card.dataset.questionId;
             const subjectTitle = card.dataset.subjectTitle;
@@ -1100,7 +1110,6 @@
             displayFeedback(feedbackArea, isCorrect, question);
         }
 
-        // *** THAY ĐỔI: Cập nhật getUserAnswer ***
         function getUserAnswer(card, type) {
             switch (type) {
                 case 'single_choice': {
@@ -1141,7 +1150,6 @@
             }
         }
 
-        // *** THAY ĐỔI: Cập nhật checkAnswer ***
         function checkAnswer(userAnswer, question) {
             const correctAnswer = question.answers;
             switch (question.type) {
@@ -1154,7 +1162,6 @@
                     return JSON.stringify(userAnswer) === JSON.stringify(correctAnswer);
                 case 'fill_blank':
                     if (userAnswer === null) return false;
-                    // So sánh không phân biệt hoa thường và bỏ khoảng trắng
                     return userAnswer.trim().toLowerCase() === correctAnswer.trim().toLowerCase();
                 case 'drag_drop':
                     const sortedCorrectAnswer = { ...correctAnswer };
@@ -1178,7 +1185,6 @@
             feedbackArea.innerHTML = feedbackHTML;
         }
 
-        // *** THAY ĐỔI: Cập nhật formatCorrectAnswer ***
         function formatCorrectAnswer(question) {
             const { answers, options, type } = question;
             switch (type) {
@@ -1191,7 +1197,7 @@
                         .map(([key, value]) => `<strong>${question.options[key-1]}</strong>: ${value}`)
                         .join('<br>');
                 case 'fill_blank':
-                    return answers; // Chỉ là chuỗi đáp án
+                    return answers; 
                 case 'drag_drop':
                     return Object.entries(answers)
                         .map(([zone, optionIdOrArray]) => {
@@ -1208,7 +1214,6 @@
             return "Không có thông tin đáp án.";
         }
        
-        // *** THAY ĐỔI: Cập nhật resetCard ***
         function resetCard(card) {
             const feedbackArea = card.querySelector('.feedback-area');
             feedbackArea.style.display = 'none';
@@ -1217,13 +1222,11 @@
             card.querySelectorAll('input[type="radio"], input[type="checkbox"]')
                 .forEach(input => input.checked = false);
                 
-            // Xóa nội dung trong ô fill_blank
             const fillInput = card.querySelector('.fill-blank-input');
             if (fillInput) {
                 fillInput.value = '';
             }
 
-            // Đưa các mục kéo thả về bank
             const bank = card.querySelector('.drag-bank');
             if (bank) {
                 const draggablesInZones = card.querySelectorAll('.drop-zone .draggable');
@@ -1233,7 +1236,6 @@
             }
 
             const question = getQuestionData(card);
-            
             const shouldShuffle = document.getElementById('shuffleCheckbox').checked;
             
             switch(question.type) {
@@ -1276,7 +1278,6 @@
                     items.forEach(item => bank.appendChild(item));
                     break;
                 }
-                // fill_blank không cần làm gì ở đây vì đã reset ở trên
             }
         }
 
@@ -1284,8 +1285,6 @@
             const card = event.target.closest('.question-card');
             resetCard(card);
         }
-
-        // --- Chức năng Toàn cục (Không thay đổi) ---
 
         function handleSubmitAll() {
             const activePane = document.querySelector('.tab-pane.active');
@@ -1308,7 +1307,7 @@
                 if (!isCorrect) {
                     const qText = card.querySelector('.question-text strong').textContent;
                     incorrectQuestions.push({
-                        id: card.id,
+                        id: card.id, 
                         text: qText
                     });
                 }
@@ -1326,10 +1325,17 @@
                         e.preventDefault();
                         const targetElement = document.getElementById(item.id);
                         if (targetElement) {
+                            // Dùng behavior auto để cuộn tức thì nếu muốn chính xác, 
+                            // nhưng smooth giúp người dùng định hướng tốt hơn trong cùng 1 trang
                             targetElement.scrollIntoView({
                                 behavior: 'smooth',
                                 block: 'center'
                             });
+                            targetElement.style.transition = 'border-color 0.5s';
+                            targetElement.style.borderColor = '#dc3545';
+                            setTimeout(() => {
+                                targetElement.style.borderColor = ''; 
+                            }, 1500);
                         }
                     });
                     errorSummaryDiv.appendChild(link);
@@ -1339,7 +1345,6 @@
             }
         }
 
-        // *** THAY ĐỔI: Cập nhật hàm handleRetryAll ***
         function handleRetryAll() {
             const activePane = document.querySelector('.tab-pane.active');
             if (!activePane) return;
@@ -1349,49 +1354,46 @@
             const shouldShuffle = document.getElementById('shuffleCheckbox').checked;
             
             if (shouldShuffle) {
-                // Nếu bật xáo trộn, ta xây dựng lại toàn bộ pane này
-                
-                // 1. Lấy dữ liệu subject tương ứng
-                const paneId = activePane.id; // vd: "subject-pane-0"
+                const paneId = activePane.id; 
                 const paneIndex = parseInt(paneId.split('-').pop(), 10);
                 const subject = quizData.subjects[paneIndex];
                 
                 if (subject) {
-                    // 2. Chạy lại logic xáo trộn VÀ sắp xếp theo loại câu hỏi
-                    // (Giống hệt logic trong setupQuizUI)
-                    shuffleArray(subject.questions); // Xáo trộn
+                    shuffleArray(subject.questions);
                     
                     const typeOrder = {
                         'single_choice': 1,
                         'multiple_choice': 2,
                         'true_false': 3,
-                        'fill_blank': 4, // Đã thêm
+                        'fill_blank': 4, 
                         'drag_drop': 5
                     };
-                    subject.questions.sort((a, b) => { // Sắp xếp theo loại
+                    subject.questions.sort((a, b) => { 
                         const orderA = typeOrder[a.type] || 99;
                         const orderB = typeOrder[b.type] || 99;
                         return orderA - orderB;
                     });
                     
-                    // 3. Xóa nội dung pane cũ và tạo lại
                     activePane.innerHTML = '';
                     subject.questions.forEach((question, qIndex) => {
-                        activePane.appendChild(createQuestionElement(question, subject.title, qIndex + 1));
+                        activePane.appendChild(createQuestionElement(question, subject.title, qIndex + 1, paneIndex));
                     });
                 }
                 
             } else {
-                // Hành vi cũ: Nếu không bật xáo trộn, chỉ reset từng card
                 const allCards = activePane.querySelectorAll('.question-card');
                 allCards.forEach(card => {
                     resetCard(card);
                 });
             }
-
-            document.getElementById('main-content').scrollTo(0, 0);
+            
+            // *** MỚI: Khi Retry All thì đưa cuộn về 0 và cập nhật vào bộ nhớ ***
+            document.getElementById('main-content').scrollTop = 0;
+            if (activePane.id) {
+                tabScrollPositions[activePane.id] = 0;
+            }
         }
 
     </script>
-</body>
-</html>
+
+</body></html>
