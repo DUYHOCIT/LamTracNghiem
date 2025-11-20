@@ -1,8 +1,9 @@
 <!DOCTYPE html>
+<!-- saved from url=(0041)https://duyhocit.github.io/LamTracNghiem/ -->
 <html lang="vi"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ôn tập trắc nghiệm</title>
+    <title>Ôn tập trắc nghiệm:))</title>
     <style>
         :root {
             --color-primary: #0056b3;
@@ -800,7 +801,21 @@
             
             if (question.type === 'fill_blank') {
                 const input = `<input type="text" class="fill-blank-input" data-question-id="${question.id}">`;
-                text.innerHTML = `<strong>Câu ${qIndex}:</strong> ${question.text.replace(/(\.{3,})/g, input)}`;
+                
+                // Bước 1: Cố gắng thay thế dấu ... (3 chấm trở lên) HOẶC ký tự đặc biệt … (Ellipsis)
+                // Regex /(\.{3,}|…)/g bắt cả trường hợp dấu chấm thường và dấu chấm đặc biệt
+                let processedText = question.text.replace(/(\.{3,}|…)/g, input);
+
+                // Bước 2: Kiểm tra xem đã thay thế được chưa. 
+                // Nếu processedText vẫn y hệt question.text nghĩa là không tìm thấy dấu chấm nào.
+                if (processedText === question.text) {
+                    // Tạo ô điền từ ở dòng dưới
+                    processedText += `<div style="margin-top: 15px; font-weight: normal;">
+                        Nhập đáp án: ${input}
+                    </div>`;
+                }
+
+                text.innerHTML = `<strong>Câu ${qIndex}:</strong> ${processedText}`;
             } else {
                 text.innerHTML = `<strong>Câu ${qIndex}:</strong> ${question.text.replace(/\n/g, '<br>')}`;
             }
@@ -1395,5 +1410,6 @@
         }
 
     </script>
+
 
 </body></html>
