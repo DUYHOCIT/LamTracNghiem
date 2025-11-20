@@ -1,10 +1,7 @@
 <!DOCTYPE html>
 <!-- saved from url=(0041)https://duyhocit.github.io/LamTracNghiem/ -->
-<html lang="vi">
-
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
+<html lang="vi"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ôn tập trắc nghiệm</title>
     <style>
@@ -22,22 +19,21 @@
             --shadow-light: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
 
-        html,
-        body {
+        html, body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
             line-height: 1.6;
             background-color: var(--color-light-bg);
             color: var(--color-text);
             margin: 0;
             padding: 0;
-            height: 100%;
-            overflow: hidden;
+            height: 100%; 
+            overflow: hidden; 
         }
-
+        
         body {
             display: flex;
             flex-direction: column;
-            height: 100vh;
+            height: 100vh; 
         }
 
         header {
@@ -45,7 +41,7 @@
             background: var(--color-main-bg);
             border-bottom: 2px solid var(--color-primary);
             position: relative;
-            flex-shrink: 0;
+            flex-shrink: 0; 
         }
 
         h1 {
@@ -53,9 +49,9 @@
             color: var(--color-primary);
             margin: 0;
         }
-
+        
         #sidebar-toggle-btn {
-            display: block;
+            display: block; 
             position: absolute;
             left: 15px;
             top: 50%;
@@ -67,7 +63,7 @@
             border: none;
             cursor: pointer;
             padding: 5px 10px;
-            z-index: 1001;
+            z-index: 1001; 
         }
 
         #file-loader {
@@ -84,21 +80,21 @@
         #jsonFileInput {
             padding: 5px;
         }
-
+        
         #shuffle-options {
             margin-top: 10px;
             font-size: 0.95em;
         }
-
+        
         #shuffle-options label {
             font-weight: normal;
             margin-right: 0;
             cursor: pointer;
         }
-
+        
         #shuffle-options input {
-            margin-right: 5px;
-            vertical-align: middle;
+             margin-right: 5px;
+             vertical-align: middle;
         }
 
 
@@ -108,12 +104,12 @@
 
         #quiz-ui {
             display: flex;
-            flex-grow: 1;
-            min-height: 0;
+            flex-grow: 1; 
+            min-height: 0; 
         }
 
         #left-sidebar {
-            width: 240px;
+            width: 240px; 
             flex-shrink: 0;
             background-color: var(--color-sidebar-bg);
             border-right: 1px solid var(--color-border);
@@ -123,7 +119,7 @@
             flex-direction: column;
             transition: transform 0.3s ease-in-out, width 0.3s ease-in-out, padding 0.3s ease-in-out;
         }
-
+        
         #quiz-ui.sidebar-collapsed #left-sidebar {
             width: 0;
             padding-left: 0;
@@ -131,21 +127,20 @@
             overflow: hidden;
             border-right: none;
         }
-
-        #quiz-ui.sidebar-collapsed #left-sidebar>* {
+        #quiz-ui.sidebar-collapsed #left-sidebar > * {
             display: none;
         }
 
         #main-content {
             flex-grow: 1;
-            overflow-y: auto;
+            overflow-y: auto; 
             background-color: var(--color-main-bg);
-            min-width: 0;
+            min-width: 0; 
             /* Tắt smooth scroll global để việc khôi phục vị trí tức thì và chính xác hơn, 
                chỉ dùng smooth scroll khi click vào link lỗi */
-            scroll-behavior: auto;
+            scroll-behavior: auto; 
         }
-
+        
         #sidebar-overlay {
             display: none;
             position: fixed;
@@ -193,8 +188,7 @@
             margin-bottom: 20px;
         }
 
-        #submit-all-btn,
-        #retry-all-btn {
+        #submit-all-btn, #retry-all-btn {
             width: 100%;
             padding: 12px;
             border: none;
@@ -210,31 +204,22 @@
             background: var(--color-correct);
             color: white;
         }
-
         #retry-all-btn {
             background: #6c757d;
             color: white;
         }
-
-        #submit-all-btn:hover {
-            opacity: 0.8;
-        }
-
-        #retry-all-btn:hover {
-            opacity: 0.8;
-        }
-
+        #submit-all-btn:hover { opacity: 0.8; }
+        #retry-all-btn:hover { opacity: 0.8; }
+        
         #error-summary {
             margin-top: 15px;
         }
-
         #error-summary h3 {
             margin: 0 0 10px 0;
             color: var(--color-incorrect);
             border-bottom: 1px solid var(--color-border);
             padding-bottom: 5px;
         }
-
         .error-link {
             display: block;
             padding: 8px 10px;
@@ -244,7 +229,6 @@
             cursor: pointer;
             font-weight: 500;
         }
-
         .error-link:hover {
             background-color: #e0e0e0;
         }
@@ -265,20 +249,19 @@
             padding: 20px;
             background: #fff;
         }
-
+        
         .question-text {
             font-weight: normal;
             font-size: 1.1em;
             margin-bottom: 20px;
             line-height: 1.7;
         }
-
         .question-text strong {
             font-weight: bold;
             color: var(--color-primary);
             margin-right: 5px;
         }
-
+        
         .question-text img {
             max-width: 100%;
             height: auto;
@@ -291,7 +274,7 @@
             padding-left: 0;
             margin: 0;
         }
-
+        
         .option-item {
             border: 1px solid var(--color-border);
             border-radius: 5px;
@@ -303,7 +286,7 @@
             cursor: pointer;
             min-height: 40px;
         }
-
+        
         .option-item:hover {
             background-color: #f9f9f9;
         }
@@ -318,15 +301,15 @@
             transform: translateY(-50%);
             color: var(--color-text);
         }
-
+        
         .option-item input[type="radio"],
         .option-item input[type="checkbox"] {
             margin-right: 12px;
             flex-shrink: 0;
-            margin-top: auto;
+            margin-top: auto; 
             margin-bottom: auto;
         }
-
+        
         .option-item label {
             width: 100%;
             cursor: pointer;
@@ -348,7 +331,7 @@
             grid-template-columns: 1fr 1fr;
             gap: 15px;
         }
-
+        
         .multiple-choice-list {
             display: flex;
             flex-direction: column;
@@ -361,22 +344,18 @@
             border-radius: 5px;
             margin-bottom: 10px;
         }
-
         .true-false-group:last-child {
             margin-bottom: 0;
         }
-
         .true-false-group p {
             margin: 0 0 10px 0;
             font-weight: 500;
         }
-
         .true-false-group label {
             margin-right: 20px;
             cursor: pointer;
             font-weight: normal;
         }
-
         .true-false-group input[type="radio"] {
             margin-right: 5px;
         }
@@ -386,7 +365,6 @@
             gap: 20px;
             flex-wrap: wrap;
         }
-
         .drag-bank {
             border: 2px dashed var(--color-border);
             padding: 10px;
@@ -399,12 +377,10 @@
             min-width: 200px;
             align-content: flex-start;
         }
-
         .drop-area {
             flex: 2;
             min-width: 300px;
         }
-
         .draggable {
             padding: 8px 12px;
             background: #e0e0e0;
@@ -414,16 +390,13 @@
             transition: background-color 0.2s;
             margin: 2px;
         }
-
         .draggable:active {
             cursor: grabbing;
         }
-
         .draggable.held {
             opacity: 0.5;
             background: #ccc;
         }
-
         .drop-zone {
             display: inline-block;
             min-width: 150px;
@@ -437,74 +410,49 @@
             flex-wrap: wrap;
             gap: 3px;
         }
-
         .drop-zone.hover {
             background: #e0e0e0;
             border-color: var(--color-primary);
         }
-
         .drop-zone .draggable {
             background: var(--color-primary);
             color: white;
             border: none;
             cursor: default;
         }
-
         .drop-area p {
             margin: 15px 0;
             line-height: 2;
         }
-
         .drop-area .question-text-in-drag {
             margin: 0 0 15px 0;
             font-weight: normal;
             font-size: 1.1em;
             line-height: 1.7;
         }
-
+        
         .fill-blank-input {
-            border: 2px solid var(--color-primary) !important;
-            padding: 8px 12px !important;
-            font-size: 1em !important;
-            font-family: inherit !important;
-            margin: 0 5px !important;
-            min-width: 150px !important;
-            background-color: var(--color-light-bg) !important;
-            text-align: center !important;
-            border-radius: 4px !important;
-            display: inline-block !important;
-            vertical-align: middle !important;
-            box-sizing: border-box !important;
-            height: auto !important;
-            line-height: normal !important;
+            border: none;
+            border-bottom: 2px solid var(--color-primary);
+            padding: 2px 5px;
+            font-size: 1em; 
+            font-family: inherit;
+            margin: 0 5px;
+            width: 150px; 
+            background-color: var(--color-light-bg);
+            text-align: center;
         }
-
         .fill-blank-input:focus {
-            outline: none !important;
-            background-color: #fff !important;
-            border-color: var(--color-answer) !important;
-            box-shadow: 0 0 5px rgba(0, 123, 255, 0.3) !important;
-        }
-
-        /* Fallback container luôn hiển thị */
-        .fill-blank-fallback {
-            display: block !important;
-            visibility: visible !important;
-            opacity: 1 !important;
-        }
-
-        /* Đảm bảo không bị ẩn bởi bất kỳ style nào */
-        .question-card .question-text input[type="text"] {
-            display: inline-block !important;
-            visibility: visible !important;
+            outline: none;
+            background-color: #fff;
+            border-color: var(--color-answer);
         }
 
         .button-group {
             margin-top: 20px;
         }
 
-        .check-btn,
-        .retry-btn {
+        .check-btn, .retry-btn {
             padding: 8px 16px;
             border: none;
             border-radius: 5px;
@@ -514,24 +462,16 @@
             margin-right: 10px;
             transition: opacity 0.3s;
         }
-
         .check-btn {
             background: var(--color-primary);
             color: white;
         }
-
         .retry-btn {
             background: #6c757d;
             color: white;
         }
-
-        .check-btn:hover {
-            opacity: 0.8;
-        }
-
-        .retry-btn:hover {
-            opacity: 0.8;
-        }
+        .check-btn:hover { opacity: 0.8; }
+        .retry-btn:hover { opacity: 0.8; }
 
         .feedback-area {
             margin-top: 15px;
@@ -557,116 +497,110 @@
             font-weight: normal;
             color: var(--color-answer);
         }
-
         .correct-answer strong {
             color: var(--color-text);
         }
-
         .correct-answer img {
-            max-width: 100%;
-            height: auto;
-            margin-top: 5px;
-            display: block;
+             max-width: 100%;
+             height: auto;
+             margin-top: 5px;
+             display: block;
         }
 
         @media (max-width: 768px) {
             h1 {
-                padding: 0 40px;
+                padding: 0 40px; 
             }
-
+            
             #quiz-ui {
-                display: block;
+                display: block; 
             }
 
             #left-sidebar {
-                position: fixed;
+                position: fixed; 
                 top: 0;
                 left: 0;
-                height: 100vh;
-                width: 280px !important;
+                height: 100vh; 
+                width: 280px !important; 
                 z-index: 1000;
-                transform: translateX(-100%);
-                padding: 20px;
+                transform: translateX(-100%); 
+                padding: 20px; 
                 border-right: 1px solid var(--color-border);
-                overflow-y: auto;
+                overflow-y: auto; 
             }
-
-            #left-sidebar>* {
-                display: block !important;
+            
+            #left-sidebar > * {
+                display: block !important; 
             }
-
+            
             #main-content {
-                height: 100%;
+                height: 100%; 
                 overflow-y: auto;
             }
-
+            
             #quiz-ui.sidebar-open #left-sidebar {
-                transform: translateX(0);
+                transform: translateX(0); 
             }
-
             #quiz-ui.sidebar-open #sidebar-overlay {
-                display: block;
+                display: block; 
             }
 
             #quiz-ui.sidebar-collapsed #left-sidebar {
-                transform: translateX(-100%);
-                width: 280px !important;
+                transform: translateX(-100%); 
+                width: 280px !important; 
                 padding: 20px;
             }
 
             .single-choice-list {
-                grid-template-columns: 1fr;
+                grid-template-columns: 1fr; 
             }
-
             .drag-drop-container {
-                flex-direction: column;
+                flex-direction: column; 
             }
-
             .drag-bank {
-                order: 2;
+                order: 2; 
             }
-
             .drop-area {
-                order: 1;
+                order: 1; 
             }
         }
+
     </style>
 </head>
-
 <body>
 
     <header>
         <button id="sidebar-toggle-btn">☰</button>
         <h1>Ôn tập trắc nghiệm</h1>
         <div id="file-loader">
-            <div>
+             <div>
                 <label for="jsonFileInput">Chọn file json hoặc kéo file vào nút:</label>
                 <input type="file" id="jsonFileInput" accept=".json">
-            </div>
-            <div id="shuffle-options">
+             </div>
+             <div id="shuffle-options">
                 <input type="checkbox" id="shuffleCheckbox" checked="">
                 <label for="shuffleCheckbox">Xáo trộn câu hỏi và đáp án</label>
-            </div>
+             </div>
         </div>
     </header>
 
     <div id="quiz-ui" class="hidden">
         <aside id="left-sidebar">
             <nav id="tab-nav"></nav>
-
+            
             <div id="global-controls">
                 <button id="submit-all-btn">Nộp toàn bộ chủ đề</button>
                 <button id="retry-all-btn">Làm lại toàn bộ chủ đề</button>
             </div>
 
             <div id="error-summary">
-            </div>
+                </div>
         </aside>
 
         <main id="main-content">
             <div id="tab-content"></div>
         </main>
-
+        
         <div id="sidebar-overlay"></div>
     </div>
 
@@ -674,8 +608,8 @@
         let quizData = null;
         let draggedItem = null;
         // *** MỚI: Biến lưu vị trí cuộn của từng tab ***
-        let tabScrollPositions = {};
-
+        let tabScrollPositions = {}; 
+        
         document.addEventListener('DOMContentLoaded', () => {
             const toggleBtn = document.getElementById('sidebar-toggle-btn');
             const overlay = document.getElementById('sidebar-overlay');
@@ -712,10 +646,10 @@
 
         function handleGlobalClick(e) {
             const item = e.target.closest('.option-item');
-            if (!item) return;
+            if (!item) return; 
 
             const tfLabel = e.target.closest('.true-false-group label');
-            if (tfLabel) return;
+            if (tfLabel) return; 
 
             if (e.target.tagName === 'INPUT') {
                 return;
@@ -755,7 +689,7 @@
                     document.getElementById('file-loader').style.display = 'none';
                     document.querySelector('header').style.borderBottom = '1px solid var(--color-border)';
                     document.querySelector('header h1').style.fontSize = '1.5em';
-
+                    
                     setupQuizUI(quizData.subjects);
 
                     document.getElementById('submit-all-btn').addEventListener('click', handleSubmitAll);
@@ -773,18 +707,18 @@
             const tabContent = document.getElementById('tab-content');
             tabNav.innerHTML = '';
             tabContent.innerHTML = '';
-
+            
             // *** MỚI: Reset lại bộ nhớ vị trí cuộn khi load file mới ***
-            tabScrollPositions = {};
+            tabScrollPositions = {}; 
 
             const shouldShuffle = document.getElementById('shuffleCheckbox').checked;
 
             subjects.forEach((subject, index) => {
-
+                
                 if (shouldShuffle) {
                     shuffleArray(subject.questions);
                 }
-
+                
                 const typeOrder = {
                     'single_choice': 1,
                     'multiple_choice': 2,
@@ -808,7 +742,7 @@
                 const pane = document.createElement('div');
                 pane.className = 'tab-pane';
                 pane.id = `subject-pane-${index}`;
-
+                
                 subject.questions.forEach((question, qIndex) => {
                     pane.appendChild(createQuestionElement(question, subject.title, qIndex + 1, index));
                 });
@@ -839,9 +773,9 @@
             document.querySelectorAll('.tab-pane').forEach(pane => {
                 pane.classList.toggle('active', pane.id === targetPaneId);
             });
-
+            
             document.getElementById('error-summary').innerHTML = '';
-
+            
             // *** MỚI: KHÔI PHỤC vị trí cuộn của Tab MỚI (Nếu có thì khôi phục, không thì về 0) ***
             // Dùng setTimeout 0 để đảm bảo DOM đã render xong style display:block trước khi cuộn
             setTimeout(() => {
@@ -859,82 +793,23 @@
             card.className = 'question-card';
             card.dataset.questionId = question.id;
             card.dataset.subjectTitle = subjectTitle;
-
-            card.id = `q-card-${subjectIndex}-${question.id}`;
+            
+            card.id = `q-card-${subjectIndex}-${question.id}`; 
 
             const text = document.createElement('div');
             text.className = 'question-text';
-
+            
             if (question.type === 'fill_blank') {
-                // Tạo input với ID duy nhất để tránh xung đột
-                const inputId = `fill_${subjectIndex}_${question.id}`;
-                const input = `<input type="text" id="${inputId}" class="fill-blank-input" data-question-id="${question.id}" placeholder="Nhập đáp án" style="display: inline-block !important;">`;
-
-                let processedText = question.text;
-                let foundBlank = false;
-
-                // GIẢI PHÁP ĐA DẠNG: Thử nhiều cách khác nhau để tìm chỗ trống
-                // Cách 1: Tìm các dạng chỗ trống phổ biến
-                const blankPatterns = [
-                    /(\.{2,})/g,           // 2 dấu chấm trở lên
-                    /(…)/g,                // dấu ellipsis unicode
-                    /(_{2,})/g,            // 2 dấu gạch dưới trở lên  
-                    /(\s{3,})/g,           // 3 khoảng trắng trở lên
-                    /(\[.*?\])/g,          // text trong ngoặc vuông [ ]
-                    /(\(.*?\))/g,          // text trong ngoặc đơn ( )
-                    /(<blank>)/gi,         // tag <blank>
-                    /(\[blank\])/gi        // [blank]
-                ];
-
-                // Thử từng pattern
-                for (let pattern of blankPatterns) {
-                    if (pattern.test(processedText)) {
-                        pattern.lastIndex = 0; // Reset regex
-                        processedText = processedText.replace(pattern, input);
-                        foundBlank = true;
-                        break; // Chỉ thay thế chỗ trống đầu tiên
-                    }
-                }
-
-                // Cách 2: Fallback - luôn đảm bảo có input
-                if (!foundBlank) {
-                    // Tách câu thành các phần và tìm vị trí có khả năng là chỗ trống
-                    const words = processedText.split(' ');
-                    let hasPotentialBlank = false;
-
-                    // Kiểm tra xem có từ nào giống chỗ trống không
-                    for (let i = 0; i < words.length; i++) {
-                        if (words[i].length === 0 ||
-                            words[i] === '.' ||
-                            words[i] === '..' ||
-                            words[i] === '...' ||
-                            words[i].includes('…')) {
-                            words[i] = input;
-                            hasPotentialBlank = true;
-                            break;
-                        }
-                    }
-
-                    if (hasPotentialBlank) {
-                        processedText = words.join(' ');
-                    } else {
-                        // CÁCH CUỐI CÙNG: Luôn thêm input ở cuối với định dạng rõ ràng
-                        processedText += `<div class="fill-blank-fallback" style="margin-top: 15px; padding: 12px; background: #f8f9fa; border-radius: 5px; border-left: 4px solid var(--color-primary); display: block !important;">
-                    <strong style="color: var(--color-primary);">Điền đáp án:</strong> ${input}
-                </div>`;
-                    }
-                }
-
-                text.innerHTML = `<strong>Câu ${qIndex}:</strong> ${processedText}`;
+                const input = `<input type="text" class="fill-blank-input" data-question-id="${question.id}">`;
+                text.innerHTML = `<strong>Câu ${qIndex}:</strong> ${question.text.replace(/(\.{3,})/g, input)}`;
             } else {
                 text.innerHTML = `<strong>Câu ${qIndex}:</strong> ${question.text.replace(/\n/g, '<br>')}`;
             }
             card.appendChild(text);
 
-            // Phần còn lại của hàm giữ nguyên
             const answerArea = document.createElement('div');
             answerArea.className = 'answer-area';
-
+            
             const uniqueNamePrefix = `s${subjectIndex}_q${question.id}`;
 
             switch (question.type) {
@@ -949,7 +824,6 @@
                     renderTrueFalse(question, answerArea, uniqueNamePrefix);
                     break;
                 case 'fill_blank':
-                    // Đã xử lý ở trên
                     break;
                 case 'drag_drop':
                     text.style.display = 'none';
@@ -960,12 +834,12 @@
 
             const buttonGroup = document.createElement('div');
             buttonGroup.className = 'button-group';
-
+            
             const checkBtn = document.createElement('button');
             checkBtn.className = 'check-btn';
             checkBtn.textContent = 'Kiểm tra';
             checkBtn.addEventListener('click', handleCheck);
-
+            
             const retryBtn = document.createElement('button');
             retryBtn.className = 'retry-btn';
             retryBtn.textContent = 'Làm lại';
@@ -986,16 +860,16 @@
         function renderSingleChoice(question, area, prefix) {
             const list = document.createElement('ul');
             list.className = 'options-list single-choice-list';
-
+            
             let indexedOptions = question.options.map((option, index) => ({
                 text: option,
                 originalValue: index + 1
             }));
-
+            
             if (document.getElementById('shuffleCheckbox').checked) {
                 shuffleArray(indexedOptions);
             }
-
+            
             indexedOptions.forEach((opt, newIndex) => {
                 const letter = String.fromCharCode(65 + newIndex);
                 const item = document.createElement('li');
@@ -1004,14 +878,14 @@
 
                 const radio = document.createElement('input');
                 radio.type = 'radio';
-                radio.name = prefix;
+                radio.name = prefix; 
                 radio.value = opt.originalValue;
                 radio.id = `${prefix}_opt_${newIndex}`;
-
+                
                 const label = document.createElement('label');
-                label.innerHTML = opt.text;
+                label.innerHTML = opt.text; 
                 label.htmlFor = `${prefix}_opt_${newIndex}`;
-
+                
                 item.appendChild(radio);
                 item.appendChild(label);
                 list.appendChild(item);
@@ -1022,16 +896,16 @@
         function renderMultipleChoice(question, area, prefix) {
             const list = document.createElement('ul');
             list.className = 'options-list multiple-choice-list';
-
+            
             let indexedOptions = question.options.map((option, index) => ({
                 text: option,
                 originalValue: index + 1
             }));
-
+            
             if (document.getElementById('shuffleCheckbox').checked) {
                 shuffleArray(indexedOptions);
             }
-
+            
             indexedOptions.forEach((opt, newIndex) => {
                 const letter = String.fromCharCode(65 + newIndex);
                 const item = document.createElement('li');
@@ -1040,14 +914,14 @@
 
                 const checkbox = document.createElement('input');
                 checkbox.type = 'checkbox';
-                checkbox.name = prefix;
+                checkbox.name = prefix; 
                 checkbox.value = opt.originalValue;
                 checkbox.id = `${prefix}_opt_${newIndex}`;
-
+                
                 const label = document.createElement('label');
                 label.innerHTML = opt.text;
                 label.htmlFor = `${prefix}_opt_${newIndex}`;
-
+                
                 item.appendChild(checkbox);
                 item.appendChild(label);
                 list.appendChild(item);
@@ -1060,26 +934,26 @@
                 text: statement,
                 originalIndex: index
             }));
-
+            
             if (document.getElementById('shuffleCheckbox').checked) {
                 shuffleArray(indexedStatements);
             }
-
+            
             indexedStatements.forEach((stmt) => {
                 const group = document.createElement('div');
                 group.className = 'true-false-group';
                 group.dataset.stmtIndex = stmt.originalIndex + 1;
-
+                
                 const stmtText = document.createElement('p');
-                stmtText.innerHTML = stmt.text;
+                stmtText.innerHTML = stmt.text; 
                 group.appendChild(stmtText);
-
+                
                 const radioName = `${prefix}_stmt_${stmt.originalIndex}`;
                 const trueId = `${radioName}_true`;
                 const falseId = `${radioName}_false`;
 
                 const trueLabel = document.createElement('label');
-                trueLabel.htmlFor = trueId;
+                trueLabel.htmlFor = trueId; 
                 const trueRadio = document.createElement('input');
                 trueRadio.type = 'radio';
                 trueRadio.name = radioName;
@@ -1087,9 +961,9 @@
                 trueRadio.id = trueId;
                 trueLabel.appendChild(trueRadio);
                 trueLabel.appendChild(document.createTextNode(' Đúng'));
-
+                
                 const falseLabel = document.createElement('label');
-                falseLabel.htmlFor = falseId;
+                falseLabel.htmlFor = falseId; 
                 const falseRadio = document.createElement('input');
                 falseRadio.type = 'radio';
                 falseRadio.name = radioName;
@@ -1103,7 +977,7 @@
                 area.appendChild(group);
             });
         }
-
+        
         function isDragDropSingleFill(question) {
             if (question.type !== 'drag_drop') return false;
             const zoneKeys = Object.keys(question.answers);
@@ -1120,11 +994,11 @@
                 text: option,
                 originalId: index + 1
             }));
-
+            
             if (document.getElementById('shuffleCheckbox').checked) {
                 shuffleArray(indexedOptions);
             }
-
+            
             indexedOptions.forEach((opt) => {
                 const item = document.createElement('div');
                 item.className = 'draggable';
@@ -1142,23 +1016,23 @@
             questionText.innerHTML = `<strong>Câu ${qIndex}:</strong> ${question.text.replace(/\n/g, '<br>')}`;
             dropArea.appendChild(questionText);
             if (isDragDropSingleFill(question)) {
-                const zoneTextTemplate = question.drop_zones[0];
+            const zoneTextTemplate = question.drop_zones[0]; 
+            
+            const pZone = document.createElement('p');
+            pZone.className = 'question-text-in-drag'; 
+            pZone.style.lineHeight = '2'; 
+            
+            pZone.appendChild(document.createTextNode(zoneTextTemplate + " ")); 
+            
+            const zone = document.createElement('span');
+            zone.className = 'drop-zone';
+            zone.dataset.zoneId = zoneTextTemplate; 
+            zone.style.minWidth = '150px'; 
+            
+            pZone.appendChild(zone);
+            dropArea.appendChild(pZone);
 
-                const pZone = document.createElement('p');
-                pZone.className = 'question-text-in-drag';
-                pZone.style.lineHeight = '2';
-
-                pZone.appendChild(document.createTextNode(zoneTextTemplate + " "));
-
-                const zone = document.createElement('span');
-                zone.className = 'drop-zone';
-                zone.dataset.zoneId = zoneTextTemplate;
-                zone.style.minWidth = '150px';
-
-                pZone.appendChild(zone);
-                dropArea.appendChild(pZone);
-
-            } else {
+        } else {
                 question.drop_zones.forEach(zoneText => {
                     const p = document.createElement('p');
                     p.innerHTML = `${zoneText}: `;
@@ -1245,7 +1119,7 @@
                 }
                 case 'multiple_choice': {
                     const checked = card.querySelectorAll('input[type="checkbox"]:checked');
-                    return Array.from(checked).map(cb => Number(cb.value)).sort((a, b) => a - b);
+                    return Array.from(checked).map(cb => Number(cb.value)).sort((a,b) => a-b);
                 }
                 case 'true_false': {
                     const answer = {};
@@ -1259,31 +1133,20 @@
                     return answer;
                 }
                 case 'fill_blank': {
-                    // Tìm input bằng nhiều cách khác nhau để đảm bảo tìm thấy
                     const input = card.querySelector('.fill-blank-input');
-                    if (input) {
-                        return input.value ? input.value.trim() : null;
-                    }
-
-                    // Fallback: tìm bất kỳ input text nào trong câu hỏi
-                    const anyInput = card.querySelector('input[type="text"]');
-                    if (anyInput) {
-                        return anyInput.value ? anyInput.value.trim() : null;
-                    }
-
-                    return null;
+                    return input ? input.value : null;
                 }
                 case 'drag_drop': {
-                    const answer = {};
-                    card.querySelectorAll('.drop-zone').forEach(zone => {
+                     const answer = {};
+                     card.querySelectorAll('.drop-zone').forEach(zone => {
                         const zoneId = zone.dataset.zoneId;
                         const items = zone.querySelectorAll('.draggable');
                         if (items.length > 0) {
                             const itemIds = Array.from(items).map(item => Number(item.dataset.optionId));
-                            answer[zoneId] = itemIds.length === 1 ? itemIds[0] : itemIds.sort((a, b) => a - b);
+                            answer[zoneId] = itemIds.length === 1 ? itemIds[0] : itemIds.sort((a,b) => a - b);
                         }
-                    });
-                    return answer;
+                     });
+                     return answer;
                 }
             }
         }
@@ -1294,7 +1157,7 @@
                 case 'single_choice':
                     return userAnswer === correctAnswer;
                 case 'multiple_choice':
-                    const sortedCorrect = [...correctAnswer].sort((a, b) => a - b);
+                    const sortedCorrect = [...correctAnswer].sort((a,b) => a - b);
                     return JSON.stringify(userAnswer) === JSON.stringify(sortedCorrect);
                 case 'true_false':
                     return JSON.stringify(userAnswer) === JSON.stringify(correctAnswer);
@@ -1305,7 +1168,7 @@
                     const sortedCorrectAnswer = { ...correctAnswer };
                     Object.keys(sortedCorrectAnswer).forEach(key => {
                         if (Array.isArray(sortedCorrectAnswer[key])) {
-                            sortedCorrectAnswer[key].sort((a, b) => a - b);
+                            sortedCorrectAnswer[key].sort((a,b) => a - b);
                         }
                     });
                     return JSON.stringify(userAnswer) === JSON.stringify(sortedCorrectAnswer);
@@ -1332,10 +1195,10 @@
                     return answers.map(a => options[a - 1]).join('<br>');
                 case 'true_false':
                     return Object.entries(answers)
-                        .map(([key, value]) => `<strong>${question.options[key - 1]}</strong>: ${value}`)
+                        .map(([key, value]) => `<strong>${question.options[key-1]}</strong>: ${value}`)
                         .join('<br>');
                 case 'fill_blank':
-                    return answers;
+                    return answers; 
                 case 'drag_drop':
                     return Object.entries(answers)
                         .map(([zone, optionIdOrArray]) => {
@@ -1351,7 +1214,7 @@
             }
             return "Không có thông tin đáp án.";
         }
-
+       
         function resetCard(card) {
             const feedbackArea = card.querySelector('.feedback-area');
             feedbackArea.style.display = 'none';
@@ -1359,7 +1222,7 @@
 
             card.querySelectorAll('input[type="radio"], input[type="checkbox"]')
                 .forEach(input => input.checked = false);
-
+                
             const fillInput = card.querySelector('.fill-blank-input');
             if (fillInput) {
                 fillInput.value = '';
@@ -1375,18 +1238,18 @@
 
             const question = getQuestionData(card);
             const shouldShuffle = document.getElementById('shuffleCheckbox').checked;
-
-            switch (question.type) {
+            
+            switch(question.type) {
                 case 'single_choice':
                 case 'multiple_choice': {
                     const list = card.querySelector('.options-list');
                     if (!list) break;
                     const items = Array.from(list.querySelectorAll('.option-item'));
-
+                    
                     if (shouldShuffle) {
                         shuffleArray(items);
                     }
-
+                    
                     items.forEach((item, newIndex) => {
                         const letter = String.fromCharCode(65 + newIndex);
                         item.dataset.prefix = letter;
@@ -1397,22 +1260,22 @@
                 case 'true_false': {
                     const answerArea = card.querySelector('.answer-area');
                     const groups = Array.from(answerArea.querySelectorAll('.true-false-group'));
-
+                    
                     if (shouldShuffle) {
                         shuffleArray(groups);
                     }
-
+                    
                     groups.forEach(group => answerArea.appendChild(group));
                     break;
                 }
                 case 'drag_drop': {
                     if (!bank) break;
                     const items = Array.from(bank.querySelectorAll('.draggable'));
-
+                    
                     if (shouldShuffle) {
                         shuffleArray(items);
                     }
-
+                    
                     items.forEach(item => bank.appendChild(item));
                     break;
                 }
@@ -1439,13 +1302,13 @@
                 const userAnswer = getUserAnswer(card, question.type);
                 const isCorrect = checkAnswer(userAnswer, question);
                 const feedbackArea = card.querySelector('.feedback-area');
-
+                
                 displayFeedback(feedbackArea, isCorrect, question);
 
                 if (!isCorrect) {
                     const qText = card.querySelector('.question-text strong').textContent;
                     incorrectQuestions.push({
-                        id: card.id,
+                        id: card.id, 
                         text: qText
                     });
                 }
@@ -1458,7 +1321,7 @@
                     link.className = 'error-link';
                     link.textContent = item.text;
                     link.dataset.targetId = item.id;
-
+                    
                     link.addEventListener('click', (e) => {
                         e.preventDefault();
                         const targetElement = document.getElementById(item.id);
@@ -1472,7 +1335,7 @@
                             targetElement.style.transition = 'border-color 0.5s';
                             targetElement.style.borderColor = '#dc3545';
                             setTimeout(() => {
-                                targetElement.style.borderColor = '';
+                                targetElement.style.borderColor = ''; 
                             }, 1500);
                         }
                     });
@@ -1486,45 +1349,45 @@
         function handleRetryAll() {
             const activePane = document.querySelector('.tab-pane.active');
             if (!activePane) return;
-
+            
             document.getElementById('error-summary').innerHTML = '';
-
+            
             const shouldShuffle = document.getElementById('shuffleCheckbox').checked;
-
+            
             if (shouldShuffle) {
-                const paneId = activePane.id;
+                const paneId = activePane.id; 
                 const paneIndex = parseInt(paneId.split('-').pop(), 10);
                 const subject = quizData.subjects[paneIndex];
-
+                
                 if (subject) {
                     shuffleArray(subject.questions);
-
+                    
                     const typeOrder = {
                         'single_choice': 1,
                         'multiple_choice': 2,
                         'true_false': 3,
-                        'fill_blank': 4,
+                        'fill_blank': 4, 
                         'drag_drop': 5
                     };
-                    subject.questions.sort((a, b) => {
+                    subject.questions.sort((a, b) => { 
                         const orderA = typeOrder[a.type] || 99;
                         const orderB = typeOrder[b.type] || 99;
                         return orderA - orderB;
                     });
-
+                    
                     activePane.innerHTML = '';
                     subject.questions.forEach((question, qIndex) => {
                         activePane.appendChild(createQuestionElement(question, subject.title, qIndex + 1, paneIndex));
                     });
                 }
-
+                
             } else {
                 const allCards = activePane.querySelectorAll('.question-card');
                 allCards.forEach(card => {
                     resetCard(card);
                 });
             }
-
+            
             // *** MỚI: Khi Retry All thì đưa cuộn về 0 và cập nhật vào bộ nhớ ***
             document.getElementById('main-content').scrollTop = 0;
             if (activePane.id) {
@@ -1535,6 +1398,4 @@
     </script>
 
 
-</body>
-
-</html>
+</body></html>
