@@ -800,9 +800,25 @@
             text.className = 'question-text';
             
             if (question.type === 'fill_blank') {
-                const input = `<input type="text" class="fill-blank-input" data-question-id="${question.id}">`;
-                text.innerHTML = `<strong>Câu ${qIndex}:</strong> ${question.text.replace(/(\.{3,})/g, input)}`;
+                // Tạo mã HTML cho ô input
+                const inputHTML = `<input type="text" class="fill-blank-input" data-question-id="${question.id}">`;
+                
+                // Bước 1: Thử tìm dấu ... (3 chấm trở lên) hoặc ký tự đặc biệt … để thay thế
+                // Regex này tìm: dấu chấm liên tiếp (3+) HOẶC ký tự … HOẶC dấu gạch dưới liên tiếp (___)
+                let processedText = question.text.replace(/(\.{3,}|…|_{3,})/g, inputHTML);
+
+                // Bước 2: So sánh: Nếu text sau khi xử lý vẫn Y HỆT text gốc 
+                // (nghĩa là không tìm thấy chỗ nào để thay thế)
+                if (processedText === question.text) {
+                    // Thì nối thêm ô input xuống dòng dưới cùng
+                    processedText += `<div style="margin-top: 10px; display: block;">
+                        <span style="font-weight: normal;">Trả lời:</span> ${inputHTML}
+                    </div>`;
+                }
+
+                text.innerHTML = `<strong>Câu ${qIndex}:</strong> ${processedText}`;
             } else {
+                // Các loại câu hỏi khác giữ nguyên
                 text.innerHTML = `<strong>Câu ${qIndex}:</strong> ${question.text.replace(/\n/g, '<br>')}`;
             }
             card.appendChild(text);
@@ -1396,6 +1412,7 @@
         }
 
     </script>
+
 
 
 </body></html>
